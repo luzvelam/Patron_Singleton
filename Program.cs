@@ -1,157 +1,148 @@
 ﻿using System;
 
-namespace PrototypeExamen
+namespace CompositeComputadora
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // Prototipos de examenes
-            PatronesDisenoExam prototipoPD = new PatronesDisenoExam();
-            InteligenciaArtificialExam prototipoIA = new InteligenciaArtificialExam();
-            TallerSistemasOperativosExam prototipoSO = new TallerSistemasOperativosExam();
-            AdministracionRedesExam prototipoRedes = new AdministracionRedesExam();
-            ProgramacionWebExam prototipoWeb = new ProgramacionWebExam();
-            DesarrolloSustentableExam prototipoDS = new DesarrolloSustentableExam();
-            LenguajesAutomatasExam prototipoLA = new LenguajesAutomatasExam();
-            TallerInvestigacionExam prototipoTI = new TallerInvestigacionExam();
+            int opcion;
 
-            // Patrones de Diseño
-            ExamenPrototype examen1 = prototipoPD.Clone();
-            examen1.Materia = "Patrones de Diseño";
-            examen1.Docente = "Maribel guerrero";
-            examen1.Grupo = "A";
-            examen1.Salon = "Lab 91L5";
-            examen1.Estudiante = "Lucero velazquez";
-            examen1.Preguntas = 10;
-            examen1.Rubrica = 50;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("===== MENU =====");
+                Console.WriteLine("1. Computadora de gama alto");
+                Console.WriteLine("2. Computadora de gama Medio");
+                Console.WriteLine("3. Computadora de gama Bajo");
+                Console.WriteLine("4. Salir");
+                Console.Write("Seleccione: ");
 
-            Console.WriteLine(examen1.MostrarExamen());
-            Console.WriteLine(examen1.Modalidad());
-            Console.WriteLine(examen1.Revision());
-            Console.WriteLine("Promedio: " + examen1.Promediar());
-            Console.WriteLine("--------------------------------");
+                int.TryParse(Console.ReadLine(), out opcion);
 
+                switch (opcion)
+                {
+                    case 1:
+                        ArmarPC("Computadora Cliente de gama alto", "Alta");
+                        break;
+                    case 2:
+                        ArmarPC("Computadora Cliente de gama media", "Media");
+                        break;
+                    case 3:
+                        ArmarPC("Computadora Cliente bajo", "Económica");
+                        break;
+                }
 
-            // Inteligencia Artificial
-            ExamenPrototype examen2 = prototipoIA.Clone();
+            } while (opcion != 4);
+        }
 
-            examen2.Materia = "Inteligencia Artificial";
-            examen2.Docente = "alaniz";
-            examen2.Grupo = "A";
-            examen2.Salon = "Lab 91L6";
-            examen2.Estudiante = "katy";
-            examen2.Preguntas = 10;
-            examen2.Rubrica = 50;
+        static void ArmarPC(string nombre, string tipo)
+        {
+            Directorio pc = new Directorio(nombre, tipo);
+            Directorio gabinete = new Directorio("Gabinete");
 
-            Console.WriteLine(examen2.MostrarExamen());
-            Console.WriteLine(examen2.Modalidad());
-            Console.WriteLine(examen2.Revision());
-            Console.WriteLine("Promedio: " + examen2.Promediar());
-            Console.WriteLine("--------------------------------");
+            
+            int precioCPU1, precioCPU2;
+            int precioRAM1, precioRAM2;
+            int precioDISCO1, precioDISCO2;
+            int precioTEC1, precioTEC2;
+            int precioMOU1, precioMOU2;
 
+           
+            if (tipo == "Alta") 
+                {
+                    precioCPU1 = 8000; precioCPU2 = 6000;
+                    precioRAM1 = 5000; precioRAM2 = 3000;
+                    precioDISCO1 = 4000; precioDISCO2 = 2000;
+                    precioTEC1 = 1500; precioTEC2 = 800;
+                    precioMOU1 = 1200; precioMOU2 = 600;
+                }
+            else if (tipo == "Media") 
+            {
+                precioCPU1 = 3000; precioCPU2 = 2800;
+                precioRAM1 = 1500; precioRAM2 = 800;
+                precioDISCO1 = 2000; precioDISCO2 = 700;
+                precioTEC1 = 800; precioTEC2 = 500;
+                precioMOU1 = 600; precioMOU2 = 300;
+            }
+            else // ECONOMICO
+            {
+                precioCPU1 = 2000; precioCPU2 = 1500;
+                precioRAM1 = 800; precioRAM2 = 500;
+                precioDISCO1 = 700; precioDISCO2 = 400;
+                precioTEC1 = 400; precioTEC2 = 250;
+                precioMOU1 = 300; precioMOU2 = 150;
+            }
 
-            // Taller de Sistemas Operativos
-            ExamenPrototype examen3 = prototipoSO.Clone();
-            examen3.Materia = "Taller de Sistemas Operativos";
-            examen3.Docente = "jorgue octavio flores";
-            examen3.Grupo = "A";
-            examen3.Salon = "Sala 9301";
-            examen3.Estudiante = "deyver";
-            examen3.Preguntas = 12;
-            examen3.Rubrica = 50;
+            Console.Clear();
+            Console.WriteLine($"Armando {nombre}\n");
 
-            Console.WriteLine(examen3.MostrarExamen());
-            Console.WriteLine(examen3.Modalidad());
-            Console.WriteLine(examen3.Revision());
-            Console.WriteLine("Promedio: " + examen3.Promediar());
-            Console.WriteLine("--------------------------------");
+            
+            Console.WriteLine("CPU:");
+            Console.WriteLine($"1. Intel i5 (${precioCPU1})");
+            Console.WriteLine($"2. Ryzen 5 (${precioCPU2})");
+            int cpu = int.Parse(Console.ReadLine());
 
+            if (cpu == 1)
+                gabinete.AgregarHijo(new Archivo("Intel i5", precioCPU1));
+            else
+                gabinete.AgregarHijo(new Archivo("Ryzen 5", precioCPU2));
 
-            // Administración de Redes
-            ExamenPrototype examen4 = prototipoRedes.Clone();
-            examen4.Materia = "Administración de Redes";
-            examen4.Docente = "jesus palma";
-            examen4.Grupo = "A";
-            examen4.Salon = "Lab Redes";
-            examen4.Estudiante = "Luisa";
-            examen4.Preguntas = 15;
-            examen4.Rubrica = 50;
+            
+            Console.WriteLine("\nRAM:");
+            Console.WriteLine($"1. 16GB (${precioRAM1})");
+            Console.WriteLine($"2. 8GB (${precioRAM2})");
+            int ram = int.Parse(Console.ReadLine());
 
-            Console.WriteLine(examen4.MostrarExamen());
-            Console.WriteLine(examen4.Modalidad());
-            Console.WriteLine(examen4.Revision());
-            Console.WriteLine("Promedio: " + examen4.Promediar());
-            Console.WriteLine("--------------------------------");
-
-            // Programación Web
-            ExamenPrototype examen5 = prototipoWeb.Clone();
-            examen5.Materia = "Programación Web";
-            examen5.Docente = "parra ";
-            examen5.Grupo = "A";
-            examen5.Salon = "Lab Web";
-            examen5.Estudiante = "lizari";
-            examen5.Preguntas = 20;
-            examen5.Rubrica = 70;
-
-            Console.WriteLine(examen5.MostrarExamen());
-            Console.WriteLine(examen5.Modalidad());
-            Console.WriteLine(examen5.Revision());
-            Console.WriteLine("Promedio: " + examen5.Promediar());
-            Console.WriteLine("--------------------------------");
-
-            // Desarrollo Sustentable
-            ExamenPrototype examen6 = prototipoDS.Clone();
-            examen6.Materia = "Desarrollo Sustentable";
-            examen6.Docente = "Lucerito";
-            examen6.Grupo = "B";
-            examen6.Salon = "Aula 914";
-            examen6.Estudiante = "lizari";
-            examen6.Preguntas = 8;
-            examen6.Rubrica = 50;
-
-            Console.WriteLine(examen6.MostrarExamen());
-            Console.WriteLine(examen6.Modalidad());
-            Console.WriteLine(examen6.Revision());
-            Console.WriteLine("Promedio: " + examen6.Promediar());
-            Console.WriteLine("--------------------------------");
+            if (ram == 1)
+                gabinete.AgregarHijo(new Archivo("RAM 16GB", precioRAM1));
+            else
+                gabinete.AgregarHijo(new Archivo("RAM 8GB", precioRAM2));
 
 
-            // Lenguajes y Autómatas
-            ExamenPrototype examen7 = prototipoLA.Clone();
-            examen7.Materia = "Lenguajes y Autómatas I";
-            examen7.Docente = "luis Gaxiola";
-            examen7.Grupo = "A";
-            examen7.Salon = "Sala 301";
-            examen7.Estudiante = "jesus";
-            examen7.Preguntas = 12;
-            examen7.Rubrica = 50;
+            Console.WriteLine("\nAlmacenamiento:");
+            Console.WriteLine($"1. SSD 1TB (${precioDISCO1})");
+            Console.WriteLine($"2. HDD 500GB (${precioDISCO2})");
+            int disco = int.Parse(Console.ReadLine());
 
-            Console.WriteLine(examen7.MostrarExamen());
-            Console.WriteLine(examen7.Modalidad());
-            Console.WriteLine(examen7.Revision());
-            Console.WriteLine("Promedio: " + examen7.Promediar());
-            Console.WriteLine("--------------------------------");
+            if (disco == 1)
+                gabinete.AgregarHijo(new Archivo("SSD 1TB", precioDISCO1));
+            else
+                gabinete.AgregarHijo(new Archivo("HDD 500GB", precioDISCO2));
 
+        
+            Console.WriteLine("\nTeclado:");
+            Console.WriteLine($"1. Logitech (${precioTEC1})");
+            Console.WriteLine($"2. Redragon (${precioTEC2})");
+            int teclado = int.Parse(Console.ReadLine());
 
-            // Taller de Investigación
-            ExamenPrototype examen8 = prototipoTI.Clone();
-            examen8.Materia = "Taller de Investigación I";
-            examen8.Docente = "Gabriela Tapia";
-            examen8.Grupo = "C";
-            examen8.Salon = "Aula 9301";
-            examen8.Estudiante = "Lucero";
-            examen8.Preguntas = 6;
-            examen8.Rubrica = 50;
-
-            Console.WriteLine(examen8.MostrarExamen());
-            Console.WriteLine(examen8.Modalidad());
-            Console.WriteLine(examen8.Revision());
-            Console.WriteLine("Promedio: " + examen8.Promediar());
-            Console.WriteLine("--------------------------------");
+            if (teclado == 1)
+                gabinete.AgregarHijo(new Archivo("Teclado Logitech", precioTEC1));
+            else
+                gabinete.AgregarHijo(new Archivo("Teclado Redragon", precioTEC2));
 
 
-            Console.ReadKey();
+            Console.WriteLine("\nMouse:");
+            Console.WriteLine($"1. Logitech (${precioMOU1})");
+            Console.WriteLine($"2. Genius (${precioMOU2})");
+            int mouse = int.Parse(Console.ReadLine());
+
+            if (mouse == 1)
+                gabinete.AgregarHijo(new Archivo("Mouse Logitech", precioMOU1));
+            else
+                gabinete.AgregarHijo(new Archivo("Mouse Genius", precioMOU2));
+
+            pc.AgregarHijo(gabinete);
+
+    
+            Console.Clear();
+            Console.WriteLine("===== RESULTADO =====");
+            Console.WriteLine($"Tipo: {tipo}");
+            Console.WriteLine($"Nombre: {nombre}");
+            Console.WriteLine("\nDescripción:");
+            Console.WriteLine(pc.ObtenerDescripcion());
+            Console.WriteLine($"Costo total: ${pc.ObtenerCosto()}");
+            Console.ReadLine();
         }
     }
 }
